@@ -1,0 +1,137 @@
+<mjml>
+  <mj-head>
+    <mj-title>Pengingat Absen MagangHub</mj-title>
+    <mj-preview>Waktunya isi Laporan Aktivitas Magang: {{TANGGAL}}, {{JAM}} WIB.</mj-preview>
+    <mj-font name="Inter" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
+
+    <mj-attributes>
+      <mj-all font-family="Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" />
+      <mj-text color="#33475b" font-size="15px" line-height="24px" padding="0" />
+      <mj-section padding="0" />
+      <mj-column padding="0" />
+    </mj-attributes>
+
+    <mj-style>
+      @media only screen and (max-width: 480px) {
+        .card-pad { padding-left: 22px !important; padding-right: 22px !important; }
+        .headline { font-size: 23px !important; line-height: 30px !important; }
+      }
+      @media (prefers-color-scheme: dark) {
+        .dm-bg { background-color: #0f1720 !important; }
+        .dm-card { background-color: #17212b !important; }
+        .dm-title { color: #eaf2f9 !important; }
+        .dm-body { color: #b9c7d4 !important; }
+        .dm-muted { color: #7d8f9e !important; }
+        .dm-chip { background-color: #1e2a36 !important; border-color: #2b3a48 !important; }
+        .dm-chip-label { color: #7d8f9e !important; }
+        .dm-chip-value { color: #eaf2f9 !important; }
+        .dm-rule { border-color: #253240 !important; }
+      }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#eef2f7" width="600px" css-class="dm-bg">
+    <mj-section padding="36px 16px 10px 16px" background-color="#eef2f7" css-class="dm-bg">
+      <mj-column background-color="#ffffff" border-radius="18px" padding="0" css-class="dm-card">
+
+        <!-- Accent bar -->
+        <mj-text padding="0" font-size="0" line-height="0">
+          <div style="height:6px;line-height:6px;font-size:0;background-color:#73a5ca;border-radius:18px 18px 0 0;">&nbsp;</div>
+        </mj-text>
+
+        <!-- Eyebrow + headline -->
+        <mj-text padding="32px 34px 0 34px" css-class="card-pad">
+          <div style="font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:#73a5ca;font-weight:700;">Pengingat harian</div>
+        </mj-text>
+        <mj-text padding="10px 34px 0 34px" css-class="card-pad">
+          <div class="dm-title headline" style="font-size:26px;line-height:34px;font-weight:700;color:#12212f;">Waktunya isi laporan magang</div>
+        </mj-text>
+        <mj-text padding="10px 34px 0 34px" css-class="card-pad">
+          <div class="dm-body" style="font-size:15px;line-height:23px;color:#5c7085;">
+            Absen MagangHub hari ini belum tercatat. Isi Laporan Aktivitas Magang
+            sebelum tenggat supaya tidak dihitung alpa.
+          </div>
+        </mj-text>
+
+        <!-- Date / time chips -->
+        <mj-text padding="22px 34px 0 34px" css-class="card-pad">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                 style="border-collapse:separate;">
+            <tr>
+              <td class="chip-cell" width="50%" style="padding:0 5px 0 0;vertical-align:top;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                       class="dm-chip"
+                       style="background-color:#f5f8fb;border:1px solid #e3ebf3;border-radius:12px;">
+                  <tr>
+                    <td style="padding:13px 16px;">
+                      <div class="dm-chip-label" style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#8296a8;font-weight:700;">Tanggal</div>
+                      <div class="dm-chip-value" style="font-size:15px;line-height:22px;color:#12212f;font-weight:700;padding-top:3px;">{{TANGGAL}}</div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td class="chip-gap" width="10" style="width:10px;font-size:0;line-height:0;">&nbsp;</td>
+              <td class="chip-cell" width="50%" style="padding:0 0 0 5px;vertical-align:top;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                       class="dm-chip"
+                       style="background-color:#f5f8fb;border:1px solid #e3ebf3;border-radius:12px;">
+                  <tr>
+                    <td style="padding:13px 16px;">
+                      <div class="dm-chip-label" style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#8296a8;font-weight:700;">Jam</div>
+                      <div class="dm-chip-value" style="font-size:15px;line-height:22px;color:#12212f;font-weight:700;padding-top:3px;">{{JAM}} WIB</div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </mj-text>
+
+        <!-- Checklist -->
+        <mj-text padding="20px 34px 0 34px" css-class="card-pad">
+          <div class="dm-body" style="font-size:14px;line-height:25px;color:#33475b;">
+            <span style="font-weight:700;color:#12212f;">Yang perlu diisi</span><br />
+            <span style="color:#73a5ca;font-weight:700;">1.</span> Laporan aktivitas harian<br />
+            <span style="color:#73a5ca;font-weight:700;">2.</span> Absen masuk dan pulang
+          </div>
+        </mj-text>
+
+        <!-- CTA -->
+        <mj-button href="{{SITE}}" background-color="#73a5ca" color="#ffffff"
+                   font-size="15px" font-weight="700" border-radius="10px"
+                   inner-padding="14px 30px" align="left" padding="24px 34px 0 34px"
+                   css-class="card-pad" letter-spacing="0">
+          Buka MagangHub
+        </mj-button>
+        <mj-text padding="12px 34px 0 34px" css-class="card-pad">
+          <div class="dm-muted" style="font-size:12px;line-height:20px;color:#8296a8;">
+            atau salin tautan:
+            <a href="{{SITE}}" target="_blank" style="color:#5c7085;text-decoration:underline;">{{SITE_HOST}}</a>
+          </div>
+        </mj-text>
+
+        <!-- Footer inside card -->
+        <mj-text padding="26px 34px 0 34px" css-class="card-pad">
+          <div class="dm-rule" style="border-top:1px solid #e6edf4;font-size:0;line-height:0;height:0;">&nbsp;</div>
+        </mj-text>
+        <mj-text padding="14px 34px 28px 34px" css-class="card-pad">
+          <div class="dm-muted" style="font-size:12px;line-height:19px;color:#8296a8;">
+            Pengingat terjadwal Senin sampai Jumat, pukul 20:00 WIB.
+            Email ini tidak perlu dibalas.
+          </div>
+        </mj-text>
+
+      </mj-column>
+    </mj-section>
+
+    <mj-section padding="0 16px 34px 16px" background-color="#eef2f7" css-class="dm-bg">
+      <mj-column padding="0">
+        <mj-text align="center" padding="0">
+          <div class="dm-muted" style="font-size:11px;line-height:18px;color:#9aabb9;">
+            MagangHub &middot; Kementerian Ketenagakerjaan RI
+          </div>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
