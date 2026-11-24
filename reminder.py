@@ -133,12 +133,14 @@ def build_message(now):
         f"  1. Kehadiran: absen masuk dan absen pulang\n"
         f"  2. Laporan aktivitas harian\n"
         f"  3. Cek pengumuman terbaru di Beranda\n\n"
+        f"Alur status di Riwayat: belum diisi -> menunggu tindakan mentor -> hadir disetujui\n\n"
         f"Catatan:\n"
-        f"  - Laporan yang dikirim ditinjau mentor; status menunggu peninjauan berarti\n"
-        f"    tidak ada tindakan tambahan dari kamu.\n"
+        f"  - Setelah dikirim, laporan berstatus menunggu tindakan mentor sampai\n"
+        f"    disetujui. Tidak ada tindakan tambahan dari kamu.\n"
         f"  - Izin dibayar maksimal 3 hari per periode. Izin ke-4 dan seterusnya tidak\n"
         f"    dibayar, tetapi tidak dihitung alpa.\n"
-        f"  - Lewat dari 23.59 WIB tanpa laporan dihitung tidak hadir.\n\n"
+        f"  - Lewat dari 23.59 WIB tanpa laporan dihitung tidak hadir.\n"
+        f"  - Sabtu, Minggu, dan hari libur ditandai Hari Libur, tidak perlu isi laporan.\n\n"
         f"Buka dashboard: {SITE}\n"
     )
     body_html = render_html(tgl, now)

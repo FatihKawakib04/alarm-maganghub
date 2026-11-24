@@ -111,6 +111,16 @@
       .chip-stack {
         padding-bottom: 8px !important;
       }
+
+      .step-cell {
+        display: block !important;
+        width: 100% !important;
+        padding: 0 0 6px 0 !important;
+      }
+
+      .arrow-cell {
+        display: none !important;
+      }
     }
 
     @media (prefers-color-scheme: dark) {
@@ -268,6 +278,38 @@
                                 </div>
                               </td>
                             </tr>
+                            <!-- Alur status (istilah mengikuti halaman Riwayat Kehadiran) -->
+                            <tr>
+                              <td align="left" class="card-pad" style="font-size:0px;padding:20px 34px 0 34px;word-break:break-word;">
+                                <div style="font-family:Inter, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;font-size:15px;line-height:24px;text-align:left;color:#0f1729;">
+                                  <div style="font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:#7c8b9d;font-weight:700;padding-bottom:9px;">Alur status di Riwayat</div>
+                                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                                    <tr>
+                                      <td class="step-cell" width="30%" style="vertical-align:top;padding:0 4px 0 0;">
+                                        <div style="border:1px solid #e5e8ee;border-radius:10px;padding:10px 11px;">
+                                          <div style="width:9px;height:9px;border-radius:50%;background-color:#94a3b8;font-size:0;line-height:9px;">&nbsp;</div>
+                                          <div class="dm-chip-label" style="font-size:10.5px;line-height:15px;color:#65758b;font-weight:600;padding-top:6px;">Belum diisi</div>
+                                        </div>
+                                      </td>
+                                      <td class="arrow-cell" width="5%" style="vertical-align:middle;text-align:center;font-size:13px;color:#b6c1cf;">&rarr;</td>
+                                      <td class="step-cell" width="30%" style="vertical-align:top;padding:0 4px;">
+                                        <div style="border:1px solid #cfe0fb;background-color:#f5f9ff;border-radius:10px;padding:10px 11px;">
+                                          <div style="width:9px;height:9px;border-radius:2px;background-color:#0b60ea;font-size:0;line-height:9px;transform:rotate(45deg);">&nbsp;</div>
+                                          <div class="dm-chip-label" style="font-size:10.5px;line-height:15px;color:#0b60ea;font-weight:700;padding-top:6px;">Menunggu tindakan mentor</div>
+                                        </div>
+                                      </td>
+                                      <td class="arrow-cell" width="5%" style="vertical-align:middle;text-align:center;font-size:13px;color:#b6c1cf;">&rarr;</td>
+                                      <td class="step-cell" width="30%" style="vertical-align:top;padding:0 0 0 4px;">
+                                        <div style="border:1px solid #cdebd8;background-color:#f4fbf6;border-radius:10px;padding:10px 11px;">
+                                          <div style="width:9px;height:9px;border-radius:50%;background-color:#12a150;font-size:0;line-height:9px;">&nbsp;</div>
+                                          <div class="dm-chip-label" style="font-size:10.5px;line-height:15px;color:#0d7a3c;font-weight:700;padding-top:6px;">Hadir disetujui</div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </div>
+                              </td>
+                            </tr>
                             <!-- Catatan -->
                             <tr>
                               <td align="left" class="card-pad" style="font-size:0px;padding:18px 34px 0 34px;word-break:break-word;">
@@ -276,7 +318,7 @@
                                     <tr>
                                       <td style="padding:14px 16px 15px 16px;">
                                         <div style="font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:#7c8b9d;font-weight:700;padding-bottom:7px;">Catatan</div>
-                                        <div class="dm-body" style="font-size:12.5px;line-height:19px;color:#4a5a70;"> &bull;&nbsp; Laporan yang dikirim ditinjau mentor. Status "menunggu peninjauan" berarti tidak ada tindakan tambahan dari kamu.<br /> &bull;&nbsp; Izin dibayar maksimal 3 hari per periode. Izin ke-4 dan seterusnya tidak dibayar, tetapi tidak dihitung alpa.<br /> &bull;&nbsp; Lewat dari 23.59 WIB tanpa laporan dihitung tidak hadir. </div>
+                                        <div class="dm-body" style="font-size:12.5px;line-height:19px;color:#4a5a70;"> &bull;&nbsp; Setelah dikirim, laporan berstatus <b style="color:#0b60ea;">Menunggu tindakan mentor</b> sampai disetujui. Tidak ada tindakan tambahan dari kamu.<br /> &bull;&nbsp; Izin dibayar maksimal 3 hari per periode. Izin ke-4 dan seterusnya tidak dibayar, tetapi tidak dihitung alpa.<br /> &bull;&nbsp; Lewat dari 23.59 WIB tanpa laporan dihitung tidak hadir.<br /> &bull;&nbsp; Sabtu, Minggu, dan hari libur ditandai <b>Hari Libur</b> di Riwayat, tidak perlu mengisi laporan. </div>
                                       </td>
                                     </tr>
                                   </table>
