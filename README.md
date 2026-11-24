@@ -27,7 +27,7 @@ Email yang gagal tetap menyampaikan pengingatnya lewat jalur cadangan.
 ```
 src/reminder.mjml      sumber desain email (MJML)
 dist/reminder.html     hasil build, dibaca reminder.py
-dist/preview*.png      screenshot preview (dokumentasi tampilan)
+dist/preview*.png      screenshot preview light & dark (dokumentasi tampilan)
 reminder.py            render template + kirim email (stdlib saja)
 package.json           dependency build (mjml)
 ```
@@ -79,8 +79,11 @@ Aturan mainnya:
   `{{SISA}}` dihitung dari waktu kirim ke batas 23.59 WIB, jadi angkanya tidak pernah basi.
 - Tema mengikuti brand MagangHub: biru `#0b60ea`, navy `#0f1729`, amber `#f4a825`
   (dipakai untuk chip batas isi), background `#f4f6fa`.
-- Layout sudah diuji di lebar 640px dan 390px (chip tanggal/batas isi menumpuk di HP),
-  plus dark mode (`prefers-color-scheme: dark`).
+- Layout diuji silang di 4 kombinasi sebelum push: light/dark x 640px/390px. Dark mode
+  pakai `prefers-color-scheme: dark`, dan background kartu di-override lewat
+  `.dm-card > table > tbody > tr > td` karena MJML menaruh background kolom di `td`,
+  bukan di div yang diberi `css-class`. Cek ulang dengan `python3 reminder.py --preview`
+  lalu buka `dist/preview.html` sambil ganti skema warna di DevTools.
 - Tautan CTA mengarah ke `https://monev.maganghub.kemnaker.go.id/dashboard`.
 - `dist/reminder.html` ikut di-commit supaya pengingat tetap jalan walau Node tidak terpasang.
 

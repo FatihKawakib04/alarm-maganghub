@@ -23,8 +23,10 @@
         .arrow-cell { display: none !important; }
       }
       @media (prefers-color-scheme: dark) {
-        .dm-bg { background-color: #0a0f17 !important; }
-        .dm-card { background-color: #111a26 !important; }
+        body, .dm-bg, .dm-bg > table { background-color: #0a0f17 !important; }
+        .dm-card, .dm-card > table { background-color: #111a26 !important; }
+        /* MJML menaruh background kolom di td dalam, bukan di div ber-class */
+        .dm-card > table > tbody > tr > td { background-color: #111a26 !important; }
         .dm-title { color: #eef3fa !important; }
         .dm-body { color: #b6c3d3 !important; }
         .dm-muted { color: #7c8b9d !important; }
@@ -33,6 +35,14 @@
         .dm-chip-label { color: #7c8b9d !important; }
         .dm-chip-value { color: #eef3fa !important; }
         .dm-note { background-color: #16212e !important; border-color: #22303f !important; }
+        .dm-step { border-color: #22303f !important; background-color: #111a26 !important; }
+        .dm-step-blue { background-color: #122238 !important; border-color: #1d3557 !important; }
+        .dm-step-green { background-color: #12261b !important; border-color: #1d3d2a !important; }
+        .dm-step-label { color: #a8b6c6 !important; }
+        .dm-step-blue-label { color: #7aa7f5 !important; }
+        .dm-step-green-label { color: #4eca86 !important; }
+        .dm-warn-text { color: #e0b356 !important; }
+        .dm-accent { color: #7aa7f5 !important; }
         .dm-rule { border-color: #1f2b39 !important; }
       }
     </mj-style>
@@ -55,7 +65,7 @@
                 <div style="width:22px;height:22px;border-radius:6px;background-color:#0b60ea;text-align:center;font-size:12px;line-height:22px;font-weight:700;color:#ffffff;">M</div>
               </td>
               <td style="vertical-align:middle;">
-                <div style="font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#65758b;font-weight:700;">MagangHub &middot; Pengingat harian</div>
+                <div class="dm-muted" style="font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#65758b;font-weight:700;">MagangHub &middot; Pengingat harian</div>
               </td>
             </tr>
           </table>
@@ -95,9 +105,9 @@
                        style="background-color:#fff8ec;border:1px solid #f7e3bd;border-radius:11px;">
                   <tr>
                     <td style="padding:12px 15px;">
-                      <div class="dm-chip-label" style="font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:#8a5f0f;font-weight:700;">Batas isi</div>
+                      <div class="dm-chip-label dm-warn-text" style="font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:#8a5f0f;font-weight:700;">Batas isi</div>
                       <div class="dm-chip-value" style="font-size:14px;line-height:21px;color:#0f1729;font-weight:700;padding-top:3px;">23.59 WIB</div>
-                      <div style="font-size:11px;line-height:16px;color:#8a5f0f;padding-top:2px;">{{SISA}}</div>
+                      <div class="dm-warn-text" style="font-size:11px;line-height:16px;color:#8a5f0f;padding-top:2px;">{{SISA}}</div>
                     </td>
                   </tr>
                 </table>
@@ -108,7 +118,7 @@
 
         <!-- Checklist -->
         <mj-text padding="22px 34px 0 34px" css-class="card-pad">
-          <div style="font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:#7c8b9d;font-weight:700;padding-bottom:9px;">Yang harus diisi</div>
+          <div class="dm-muted" style="font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:#7c8b9d;font-weight:700;padding-bottom:9px;">Yang harus diisi</div>
           <div class="dm-body" style="font-size:14px;line-height:24px;color:#25324a;">
             <span style="color:#0b60ea;font-weight:700;">1.</span>&nbsp; Kehadiran: absen masuk dan absen pulang<br />
             <span style="color:#0b60ea;font-weight:700;">2.</span>&nbsp; Laporan aktivitas harian<br />
@@ -118,27 +128,27 @@
 
         <!-- Alur status (istilah mengikuti halaman Riwayat Kehadiran) -->
         <mj-text padding="20px 34px 0 34px" css-class="card-pad">
-          <div style="font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:#7c8b9d;font-weight:700;padding-bottom:9px;">Alur status di Riwayat</div>
+          <div class="dm-muted" style="font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:#7c8b9d;font-weight:700;padding-bottom:9px;">Alur status di Riwayat</div>
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr>
               <td class="step-cell" width="30%" style="vertical-align:top;padding:0 4px 0 0;">
-                <div style="border:1px solid #e5e8ee;border-radius:10px;padding:10px 11px;">
+                <div class="dm-step" style="border:1px solid #e5e8ee;border-radius:10px;padding:10px 11px;">
                   <div style="width:9px;height:9px;border-radius:50%;background-color:#94a3b8;font-size:0;line-height:9px;">&nbsp;</div>
-                  <div class="dm-chip-label" style="font-size:10.5px;line-height:15px;color:#65758b;font-weight:600;padding-top:6px;">Belum diisi</div>
+                  <div class="dm-step-label" style="font-size:10.5px;line-height:15px;color:#65758b;font-weight:600;padding-top:6px;">Belum diisi</div>
                 </div>
               </td>
               <td class="arrow-cell" width="5%" style="vertical-align:middle;text-align:center;font-size:13px;color:#b6c1cf;">&rarr;</td>
               <td class="step-cell" width="30%" style="vertical-align:top;padding:0 4px;">
-                <div style="border:1px solid #cfe0fb;background-color:#f5f9ff;border-radius:10px;padding:10px 11px;">
+                <div class="dm-step dm-step-blue" style="border:1px solid #cfe0fb;background-color:#f5f9ff;border-radius:10px;padding:10px 11px;">
                   <div style="width:9px;height:9px;border-radius:2px;background-color:#0b60ea;font-size:0;line-height:9px;transform:rotate(45deg);">&nbsp;</div>
-                  <div class="dm-chip-label" style="font-size:10.5px;line-height:15px;color:#0b60ea;font-weight:700;padding-top:6px;">Menunggu tindakan mentor</div>
+                  <div class="dm-step-blue-label" style="font-size:10.5px;line-height:15px;color:#0b60ea;font-weight:700;padding-top:6px;">Menunggu tindakan mentor</div>
                 </div>
               </td>
               <td class="arrow-cell" width="5%" style="vertical-align:middle;text-align:center;font-size:13px;color:#b6c1cf;">&rarr;</td>
               <td class="step-cell" width="30%" style="vertical-align:top;padding:0 0 0 4px;">
-                <div style="border:1px solid #cdebd8;background-color:#f4fbf6;border-radius:10px;padding:10px 11px;">
+                <div class="dm-step dm-step-green" style="border:1px solid #cdebd8;background-color:#f4fbf6;border-radius:10px;padding:10px 11px;">
                   <div style="width:9px;height:9px;border-radius:50%;background-color:#12a150;font-size:0;line-height:9px;">&nbsp;</div>
-                  <div class="dm-chip-label" style="font-size:10.5px;line-height:15px;color:#0d7a3c;font-weight:700;padding-top:6px;">Hadir disetujui</div>
+                  <div class="dm-step-green-label" style="font-size:10.5px;line-height:15px;color:#0d7a3c;font-weight:700;padding-top:6px;">Hadir disetujui</div>
                 </div>
               </td>
             </tr>
@@ -152,9 +162,9 @@
                  style="background-color:#f7f9fc;border:1px solid #e5e8ee;border-radius:12px;">
             <tr>
               <td style="padding:14px 16px 15px 16px;">
-                <div style="font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:#7c8b9d;font-weight:700;padding-bottom:7px;">Catatan</div>
+                <div class="dm-muted" style="font-size:10px;letter-spacing:1.1px;text-transform:uppercase;color:#7c8b9d;font-weight:700;padding-bottom:7px;">Catatan</div>
                 <div class="dm-body" style="font-size:12.5px;line-height:19px;color:#4a5a70;">
-                  &bull;&nbsp; Setelah dikirim, laporan berstatus <b style="color:#0b60ea;">Menunggu tindakan mentor</b>
+                  &bull;&nbsp; Setelah dikirim, laporan berstatus <b class="dm-accent" style="color:#0b60ea;">Menunggu tindakan mentor</b>
                   sampai disetujui. Tidak ada tindakan tambahan dari kamu.<br />
                   &bull;&nbsp; Izin dibayar maksimal 3 hari per periode. Izin ke-4 dan seterusnya
                   tidak dibayar, tetapi tidak dihitung alpa.<br />
@@ -177,7 +187,7 @@
         <mj-text padding="11px 34px 0 34px" css-class="card-pad">
           <div class="dm-muted" style="font-size:12px;line-height:19px;color:#7c8b9d;">
             atau buka manual:
-            <a href="{{SITE}}" target="_blank" style="color:#0b60ea;text-decoration:none;font-weight:600;">{{SITE_HOST}}</a>
+            <a class="dm-accent" href="{{SITE}}" target="_blank" style="color:#0b60ea;text-decoration:none;font-weight:600;">{{SITE_HOST}}</a>
           </div>
         </mj-text>
 
