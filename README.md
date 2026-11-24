@@ -1,7 +1,8 @@
 # alarm-maganghub
 
-Pengingat absen MagangHub lewat email. Cron jalan Senin sampai Jumat pukul 20:00 WIB,
-mengirim satu email berisi pengingat mengisi Laporan Aktivitas Magang.
+Pengingat laporan harian MagangHub lewat email. Cron jalan Senin sampai Jumat pukul 20:00 WIB,
+mengirim satu email berisi pengingat mengisi kehadiran dan laporan aktivitas sebelum batas
+pengisian **23.59 WIB** (sesuai dashboard monev peserta).
 
 Tampilan email dibangun pakai **MJML** (framework email), bukan HTML tulis tangan.
 Sumber desain ada di `src/reminder.mjml`, hasil build ada di `dist/reminder.html`, dan
@@ -13,7 +14,7 @@ Sumber desain ada di `src/reminder.mjml`, hasil build ada di `dist/reminder.html
 cron (Sen-Jum 20:00 WIB)
   └─ scripts/maganghub-reminder.sh
        └─ reminder.py
-            ├─ baca dist/reminder.html  → isi {{TANGGAL}} {{JAM}} {{SITE}}
+            ├─ baca dist/reminder.html  → isi {{TANGGAL}} {{JAM}} {{SISA}} {{SITE}}
             ├─ kirim email (Resend API, fallback SMTP Gmail)
             └─ kalau email gagal → stdout berisi pengingat, cron meneruskannya ke Telegram
 ```
@@ -73,10 +74,14 @@ npm run build     # src/reminder.mjml -> dist/reminder.html
 Aturan mainnya:
 
 - **Jangan** edit `dist/reminder.html` langsung, file itu hasil generate. Edit `src/reminder.mjml`.
-- Placeholder yang dikenali `reminder.py`: `{{TANGGAL}}`, `{{JAM}}`, `{{SITE}}`, `{{SITE_HOST}}`.
-  Kalau menambah placeholder baru, tambahkan juga pasangannya di `render_html()`.
-- Warna aksen utama `#73a5ca`, teks `#12212f` / `#5c7085`, background `#eef2f7`.
-- Layout sudah diuji di lebar 640px dan 390px, plus dark mode (`prefers-color-scheme: dark`).
+- Placeholder yang dikenali `reminder.py`: `{{TANGGAL}}`, `{{JAM}}`, `{{SISA}}`, `{{SITE}}`,
+  `{{SITE_HOST}}`. Kalau menambah placeholder baru, tambahkan juga pasangannya di `render_html()`.
+  `{{SISA}}` dihitung dari waktu kirim ke batas 23.59 WIB, jadi angkanya tidak pernah basi.
+- Tema mengikuti brand MagangHub: biru `#0b60ea`, navy `#0f1729`, amber `#f4a825`
+  (dipakai untuk chip batas isi), background `#f4f6fa`.
+- Layout sudah diuji di lebar 640px dan 390px (chip tanggal/batas isi menumpuk di HP),
+  plus dark mode (`prefers-color-scheme: dark`).
+- Tautan CTA mengarah ke `https://monev.maganghub.kemnaker.go.id/dashboard`.
 - `dist/reminder.html` ikut di-commit supaya pengingat tetap jalan walau Node tidak terpasang.
 
 ## Catatan

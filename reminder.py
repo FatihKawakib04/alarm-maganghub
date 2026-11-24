@@ -37,8 +37,11 @@ WIB = timezone(timedelta(hours=7))
 
 DEFAULT_TO = "maganghub@satgas.ai.id"
 DEFAULT_FROM = "alarm@satgas.ai.id"
-SITE = "https://maganghub.kemnaker.go.id"
-SITE_HOST = "maganghub.kemnaker.go.id"
+# Dashboard monev peserta (bukan landing page maganghub.kemnaker.go.id).
+SITE = "https://monev.maganghub.kemnaker.go.id/dashboard"
+SITE_HOST = "monev.maganghub.kemnaker.go.id"
+# Batas pengisian laporan harian menurut dashboard: 23.59 WIB.
+DEADLINE_HOUR, DEADLINE_MINUTE = 23, 59
 
 # Template HTML hasil build MJML (lihat src/reminder.mjml + npm run build).
 TEMPLATE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "dist", "reminder.html")
@@ -62,13 +65,34 @@ def load_env():
     return vals
 
 
-FALLBACK_HTML = """<div style="font-family:Arial,sans-serif;font-size:15px;color:#33475b">
-<h2 style="margin:0 0 8px;color:#12212f">Waktunya isi laporan magang</h2>
-<p style="margin:0 0 12px">{tgl} &middot; {jam} WIB</p>
-<p style="margin:0 0 16px">Absen MagangHub hari ini belum tercatat. Isi Laporan
-Aktivitas Magang sebelum tenggat supaya tidak dihitung alpa.</p>
-<p style="margin:0"><a href="{site}" style="color:#73a5ca">Buka MagangHub</a></p>
+FALLBACK_HTML = """<div style="font-family:Arial,sans-serif;font-size:15px;color:#25324a">
+<h2 style="margin:0 0 8px;color:#0f1729">Laporan hari ini belum diisi</h2>
+<p style="margin:0 0 12px">{tgl} &middot; batas isi 23.59 WIB ({sisa})</p>
+<p style="margin:0 0 16px">Dashboard MagangHub belum mencatat laporan dan kehadiran kamu
+untuk hari ini. Isi sebelum batas pengisian supaya tidak dihitung alpa.</p>
+<p style="margin:0 0 16px">Yang harus diisi: kehadiran (absen masuk &amp; pulang),
+laporan aktivitas harian, cek pengumuman di Beranda.</p>
+<p style="margin:0"><a href="{site}" style="color:#0b60ea">Buka Dashboard</a></p>
 </div>"""
+
+
+def sisa_waktu(now):
+    """Jarak ke batas pengisian 23.59 WIB, dalam bahasa manusia.
+
+    Dipakai untuk chip "Batas isi" supaya penerima lihat sisa waktu sebenarnya,
+    bukan angka statis yang jadi bohong kalau jadwal cron diubah.
+    """
+    deadline = now.replace(hour=DEADLINE_HOUR, minute=DEADLINE_MINUTE, second=0, microsecond=0)
+    delta = deadline - now
+    menit = int(delta.total_seconds() // 60)
+    if menit <= 0:
+        return "batas sudah lewat"
+    jam, sisa_menit = divmod(menit, 60)
+    if jam == 0:
+        return f"sisa {sisa_menit} menit lagi"
+    if sisa_menit == 0:
+        return f"sisa {jam} jam lagi"
+    return f"sisa {jam} jam {sisa_menit} menit lagi"
 
 
 def render_html(tgl, jam):
@@ -79,9 +103,11 @@ def render_html(tgl, jam):
     Kalau file template hilang (mis. repo di-clone tanpa build), pakai
     FALLBACK_HTML supaya pengingat tidak pernah gagal terkirim hanya karena UI.
     """
+    sisa = sisa_waktu(jam)
     values = {
         "{{TANGGAL}}": tgl,
         "{{JAM}}": f"{jam:%H:%M}",
+        "{{SISA}}": sisa,
         "{{SITE}}": SITE,
         "{{SITE_HOST}}": SITE_HOST,
     }
@@ -97,17 +123,23 @@ def render_html(tgl, jam):
 
 def build_message(now):
     tgl = f"{HARI[now.weekday()]}, {now.day} {BULAN[now.month-1]} {now.year}"
-    subject = f"Reminder Absen MagangHub - {tgl}"
+    subject = f"Laporan MagangHub belum diisi - {tgl}"
     body_text = (
-        f"Waktunya isi laporan magang\n"
-        f"{tgl} - {now:%H:%M} WIB\n\n"
-        f"Absen MagangHub hari ini belum tercatat. Isi Laporan Aktivitas Magang\n"
-        f"sebelum tenggat supaya tidak dihitung alpa.\n\n"
-        f"Yang perlu diisi:\n"
-        f"  1. Laporan aktivitas harian\n"
-        f"  2. Absen masuk dan pulang\n\n"
-        f"Buka: {SITE}\n\n"
-        f"Pengingat terjadwal Senin sampai Jumat, pukul 20:00 WIB.\n"
+        f"Laporan hari ini belum diisi\n"
+        f"{tgl} - batas isi 23.59 WIB ({sisa_waktu(now)})\n\n"
+        f"Dashboard MagangHub belum mencatat laporan dan kehadiran kamu untuk hari ini.\n"
+        f"Isi sebelum batas pengisian supaya tidak dihitung alpa.\n\n"
+        f"Yang harus diisi:\n"
+        f"  1. Kehadiran: absen masuk dan absen pulang\n"
+        f"  2. Laporan aktivitas harian\n"
+        f"  3. Cek pengumuman terbaru di Beranda\n\n"
+        f"Catatan:\n"
+        f"  - Laporan yang dikirim ditinjau mentor; status menunggu peninjauan berarti\n"
+        f"    tidak ada tindakan tambahan dari kamu.\n"
+        f"  - Izin dibayar maksimal 3 hari per periode. Izin ke-4 dan seterusnya tidak\n"
+        f"    dibayar, tetapi tidak dihitung alpa.\n"
+        f"  - Lewat dari 23.59 WIB tanpa laporan dihitung tidak hadir.\n\n"
+        f"Buka dashboard: {SITE}\n"
     )
     body_html = render_html(tgl, now)
     return subject, body_text, body_html
